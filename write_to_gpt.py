@@ -13,7 +13,8 @@ def call_openai_api(prompt):
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": prompt}
+            {"role": "system", "content": "You are a helpful software tester"},
+            {"role": "user", "content": f"Write unit test for the react component with the framework Jest. React component:\n {prompt}"}
         ],
         max_tokens=150,
         temperature=0.1
