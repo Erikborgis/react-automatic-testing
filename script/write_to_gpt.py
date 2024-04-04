@@ -16,12 +16,14 @@ def call_openai_api(prompt):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful software tester"},
-            {"role": "user", "content": f"Write unit tests for the react component with the framework Jest. React component:\n {prompt}"}
+            {"role": "user", "content": f"Write unit tests for the react component with the framework Jest.\nDO NOT WRITE COMMENTS ON THE END OF THE FILE.\nReact component:\n {prompt}"}
         ],
-        max_tokens=300,
+        max_tokens=400,
         temperature=0.1
     )
 
     content = response.choices[0].message.content
+    print(content)
     code_block = content.split("```jsx")[1].strip()
+    code_block = code_block.split("```")[0].strip()
     return code_block
