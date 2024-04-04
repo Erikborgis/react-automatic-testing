@@ -1,2 +1,6 @@
 .env
+<<<<<<< HEAD
 __pycache__
+=======
+__pycache__/
+>>>>>>> f8f75f0 (gitignore)
