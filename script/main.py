@@ -12,7 +12,7 @@ if __name__ == "__main__":
     # Searches all folders in root folder for react components. Tuple with both filename and realtive path of the react components.
     tsx_files_and_paths = find_react_components.search_files(cwd, ".tsx")
 
-    # tsx_files = [file for file in os.listdir(folder_path) if file.endswith('.tsx')]
+    # tsx_files = [file for file in os.listdir(folder_path) if file.endswith('.tsx')] Solution for only generating tests for components in certain folder.
 
     for file, path in tsx_files_and_paths:
         react_component_text = file_reader.read_file(path)
@@ -20,9 +20,9 @@ if __name__ == "__main__":
         if react_component_text:
             test_content = write_to_gpt.call_openai_api(react_component_text, path)
             
-            # Regenerates test files until the tests pass. Max 10 tries.
+            # Regenerates unit tests until the tests pass. Max 10 tries.
             number_of_tries = 0
-            while(True and number_of_tries < 10):
+            while(True and number_of_tries < 1):
                 generate_test_file.generate_test_file(test_content, file_name)
                 
                 # If the test does not return any errors then break the loop.
@@ -32,6 +32,6 @@ if __name__ == "__main__":
                     number_of_tries += 1
                 else:
                     break
-            print(number_of_tries)
     
     run_test.run_eslint()
+    run_test.check_coverage([filename for filename, _ in tsx_files_and_paths])
