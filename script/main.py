@@ -15,11 +15,23 @@ if __name__ == "__main__":
     # tsx_files = [file for file in os.listdir(folder_path) if file.endswith('.tsx')]
 
     for file, path in tsx_files_and_paths:
-        content = file_reader.read_file(path)
+        react_component_text = file_reader.read_file(path)
         file_name = os.path.splitext(file)[0]
-        if content:
-            test_content = write_to_gpt.call_openai_api(content, path)
-            generate_test_file.generate_test_file(test_content, file_name)
-            run_test.run_test(file_name)
+        if react_component_text:
+            test_content = write_to_gpt.call_openai_api(react_component_text, path)
+            
+            # Regenerates test files until the tests pass. Max 10 tries.
+            number_of_tries = 0
+            while(True and number_of_tries < 10):
+                generate_test_file.generate_test_file(test_content, file_name)
+                
+                # If the test does not return any errors then break the loop.
+                test_status_message = run_test.run_test(file_name)
+                if(test_status_message):
+                    test_content = write_to_gpt.regenerate_test(react_component_text, test_content, test_status_message, path)
+                    number_of_tries += 1
+                else:
+                    break
+            print(number_of_tries)
     
     run_test.run_eslint()

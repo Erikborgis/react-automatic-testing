@@ -11,7 +11,7 @@ def run_test(file_name):
     text=True,
     encoding="utf-8")
 
-  print(result.stderr)
+  return result.stderr
 
 # Run eslint on tests.
 def run_eslint():
