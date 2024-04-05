@@ -6,11 +6,10 @@ import find_react_components
 import os
 
 if __name__ == "__main__":
-    #folder_path = "../files_to_test"
-
+    
     cwd = os.getcwd()
 
-    # Searches all folders in root folder for react components. Tuple with both filename and path of the react components.
+    # Searches all folders in root folder for react components. Tuple with both filename and realtive path of the react components.
     tsx_files_and_paths = find_react_components.search_files(cwd, ".tsx")
 
     # tsx_files = [file for file in os.listdir(folder_path) if file.endswith('.tsx')]
@@ -22,3 +21,5 @@ if __name__ == "__main__":
             test_content = write_to_gpt.call_openai_api(content, path)
             generate_test_file.generate_test_file(test_content, file_name)
             run_test.run_test(file_name)
+    
+    run_test.run_eslint()
