@@ -22,14 +22,14 @@ if __name__ == "__main__":
             
             # Regenerates unit tests until the tests pass. Max 10 tries.
             number_of_tries = 0
-            while(True and number_of_tries < 1):
+            while(True and number_of_tries < 10):
                 generate_test_file.generate_test_file(test_content, file_name)
                 
                 # If the test does not return any errors then break the loop.
                 test_status_message = run_test.run_test(file_name)
                 if(test_status_message):
                     test_content = write_to_gpt.regenerate_test(react_component_text, test_content, test_status_message, path)
-                    number_of_tries += 1
+                    number_of_tries += 10
                 else:
                     break
     
