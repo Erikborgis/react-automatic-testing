@@ -1,4 +1,11 @@
 {
+  "scripts": {
+    "eslint": "npx eslint . || exit 0",
+    "eslint:fix": "npx eslint --fix . || exit 0",
+    "lint:fix": "eslint --fix --ext .js,.jsx .",
+    "lint": "npm run eslint",
+    "test": "npm run lint"
+  },
   "dependencies": {
     "@babel/core": "^7.24.4",
     "@babel/preset-react": "^7.24.1",

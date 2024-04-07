@@ -54,3 +54,15 @@ result = subprocess.run(
 
 print(result.stderr)
 '''
+
+'''
+result = subprocess.run(
+    ["node", eslint_path, "tests/**"],
+    capture_output=True,
+    text=True,
+    encoding="utf-8")
+  
+print(result.stdout)
+print()
+print(result.stderr)
+'''
