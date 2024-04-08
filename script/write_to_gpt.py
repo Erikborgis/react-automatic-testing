@@ -9,13 +9,29 @@ api_key = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(api_key=api_key)
 
-def call_openai_api(prompt, path_to_react_component):
+
+
+def call_openai_api(code, path_to_react_component):
+
+
+    prompt = f"I need unit tests for the React Native Component\n\
+    Do not write comments on the end of the file\n\
+    Import the React Native Component from ../{path_to_react_component}\n\
+    The React Native Component to be tested:\n\
+    {code}"
+
+    assistantPrompt = "Follow this template for the test file:\n\
+    ```jsx\n\
+    import React from 'react';\n\
+    import { render, fireEvent } from '@testing-library/react-native';\n\
+    ```"
 
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a helpful software tester"},
-            {"role": "user", "content": f"Write unit tests for the REACT NATIVE component with the framework Jest.\nDO NOT WRITE COMMENTS ON THE END OF THE FILE.\nSurround the test with ```jsx.\n Import the react native component from ../{path_to_react_component}\n React native component:\n {prompt}"}
+            {"role": "system", "content": "You are a helpful software tester for React Native components using the testframework Jest"},
+            {"role": "assistant", "content": assistantPrompt},
+            {"role": "user", "content": prompt}
         ],
         temperature=0.1
     )
@@ -31,7 +47,7 @@ def regenerate_test(react_component_text, test, error_message, path_to_react_com
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a helpful software tester"},
+            {"role": "system", "content": "You are a helpful software tester for React Native compoonents"},
             {"role": "user", "content": f"There was an error with the unit test:\n{test}\n For the REACT NATIVE component:\n{react_component_text}\nError message:\n{error_message}.\nPlease write a new unit test but keep the passed tests\nDO NOT WRITE COMMENTS ON THE END OF THE FILE.\nOnly include the react code in your answer. No other text\n Import the react native component from ../{path_to_react_component}\n"}
         ],
         temperature=0.1

@@ -22,7 +22,7 @@ if __name__ == "__main__":
             
             # Regenerates unit tests until the tests pass. Max 10 tries.
             number_of_tries = 0
-            while(True and number_of_tries < 10):
+            while(True and number_of_tries < 5):
                 generate_test_file.generate_test_file(test_content, file_name)
                 
                 test_status, test_message  = run_test.run_test(file_name)
