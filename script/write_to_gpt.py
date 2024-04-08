@@ -5,12 +5,11 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+# Set API key and initialize client.
 api_key = os.getenv("OPENAI_API_KEY")
-
 client = OpenAI(api_key=api_key)
 
-
-
+# Call openai api and ask it to generate unit test for react native component with specified temperature.
 def call_openai_api(code, path_to_react_component, temperature):
     prompt = f"I need unit tests for the React Native Component\n\
     Do not write comments on the end of the file\n\

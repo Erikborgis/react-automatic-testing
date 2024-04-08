@@ -13,7 +13,7 @@ def search_files(directory, extension):
                 # Split the relative path and remove the first part (directory)
                 _, relative_path = os.path.splitdrive(relative_path)
                 # Append a tuple of filename and relative path
-                found_files.append((file, relative_path))
+                found_files.append((os.path.splitext(file)[0], relative_path))
 
     if not(found_files):
         print("No .tsx files found.")
