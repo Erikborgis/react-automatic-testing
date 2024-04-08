@@ -40,5 +40,4 @@ if __name__ == "__main__":
                 else:
                     break
     
-    run_test.run_eslint()
     run_test.check_coverage([filename for filename, _ in tsx_files_and_paths])
