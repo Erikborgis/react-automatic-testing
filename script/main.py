@@ -10,12 +10,12 @@ def main():
     cwd = os.getcwd()
 
     # Searches all folders in root folder for react components. Tuple with both filename and realtive path of the react components.
-    tsx_files_and_paths = find_react_components.search_files(cwd, ".tsx")
+    react_files_and_paths = find_react_components.search_files(cwd, ".tsx")
 
     stop_temperature = 0.5  # Maximum temperature, max temp = 2 For coding openAi recommends <= 0.5
     steps_temperature = 2  # How many steps it should take between stop and start. This is how many test files will be generated per react component. This should be a whole number.
 
-    for file_name, path in tsx_files_and_paths:
+    for file_name, path in react_files_and_paths:
         react_component_text = file_operations.read_file(path)
         if react_component_text:
             csv_operations.generate_csv_file(file_name)
