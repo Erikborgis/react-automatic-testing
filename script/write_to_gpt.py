@@ -11,7 +11,7 @@ client = OpenAI(api_key=api_key)
 
 
 
-def call_openai_api(code, path_to_react_component):
+def call_openai_api(code, path_to_react_component, temperature):
 
 
     prompt = f"I need unit tests for the React Native Component\n\
@@ -33,7 +33,8 @@ def call_openai_api(code, path_to_react_component):
             {"role": "assistant", "content": assistantPrompt},
             {"role": "user", "content": prompt}
         ],
-        temperature=0.1
+        temperature=temperature,
+        top_p=0.1
     )
 
     content = response.choices[0].message.content
