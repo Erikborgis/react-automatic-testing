@@ -3,6 +3,8 @@ import write_to_gpt
 import generate_test_file
 import run_test
 import find_react_components
+import code_coverage
+import analyze_tests
 import os
 
 if __name__ == "__main__":
@@ -12,7 +14,7 @@ if __name__ == "__main__":
     # Searches all folders in root folder for react components. Tuple with both filename and realtive path of the react components.
     tsx_files_and_paths = find_react_components.search_files(cwd, ".tsx")
 
-    # tsx_files = [file for file in os.listdir(folder_path) if file.endswith('.tsx')] Solution for only generating tests for components in certain folder.
+    test_generation_statistics = []
 
     stop_temperature = 0.5 # Maximum temperature, max temp = 2 For coding openAi recommends <= 0.5
     start_temperature = 0.1 # What temperature it should start on minimum = 0
@@ -36,22 +38,22 @@ if __name__ == "__main__":
 
                 # Regenerates unit tests until the tests pass. Max 10 tries.
                 number_of_tries = 0
+                pass_status = False
                 while(True and number_of_tries < 5):
                     generate_test_file.generate_test_file(test_content, temp_file_name)
                     
                     test_status, test_message  = run_test.run_test(temp_file_name)
                     
-                    if(test_status == False):
-                        # Reruns the test generation
-                        test_content = write_to_gpt.call_openai_api(react_component_text, path, temperature)
-
-                        '''
-                        Reruns test generation with error messages and test generated to try and "fix" it.
-                        test_content = write_to_gpt.regenerate_test(react_component_text, test_content, test_message, path)
-                        '''
-                        
-                        number_of_tries += 1
-                    else:
+                    if(test_status):
+                        pass_status = True
                         break
+                    else:
+                        # Reruns the test generation
+                        test_content = write_to_gpt.call_openai_api(react_component_text, path)
+                        number_of_tries += 1
+                
+                test_generation_statistics.append((file_name, number_of_tries, pass_status))
+
                 temps_ran += 1
-    run_test.check_coverage([filename for filename, _ in tsx_files_and_paths])
+    coverage = code_coverage.check_coverage_all_tests()
+    analyze_tests.generate_csv_files(test_generation_statistics, coverage)

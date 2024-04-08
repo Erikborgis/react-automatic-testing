@@ -20,7 +20,7 @@ def run_test(file_name):
     return False, result.stderr
 
 # Checks code coverage on the react components.
-def check_coverage(files):
+def check_coverage():
   results = subprocess.run(
     ["node", jest_path, "--coverage"], # This is to check all files:  
     # ["node", jest_path, "--coverage", "--collectCoverageFrom=" + ','.join(files)], # This is supposed to only check coverage of react components but does not work
@@ -28,7 +28,7 @@ def check_coverage(files):
     text=True,
     encoding="utf-8")
   
-  print(results.stdout)
+  return results.stdout
 
 '''
 Use this if you want to run the script with a certain file to test it without running the whole main script.
