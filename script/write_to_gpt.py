@@ -12,15 +12,14 @@ client = OpenAI(api_key=api_key)
 
 
 def call_openai_api(code, path_to_react_component, temperature):
-
-
     prompt = f"I need unit tests for the React Native Component\n\
     Do not write comments on the end of the file\n\
     Import the React Native Component from ../{path_to_react_component}\n\
     The React Native Component to be tested:\n\
     {code}"
 
-    assistantPrompt = "Follow this template for the test file:\n\
+    assistantPrompt = "Always render ui elements if available, and always test the functionality\n\
+    Follow this template for the test file:\n\
     ```jsx\n\
     import React from 'react';\n\
     import { render, fireEvent } from '@testing-library/react-native';\n\

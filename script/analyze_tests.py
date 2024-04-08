@@ -1,22 +1,26 @@
 import csv
 
-def generate_csv_files(test_generation_statistics, coverage):
-    for file_name, num_tries, pass_status in test_generation_statistics:
-        csv_filename = f"{file_name}_stats.csv"
-        with open(csv_filename, 'w', newline='') as csvfile:
-            fieldnames = ['File Name', 'Number of Tries', 'Pass Status', '% Stmts', '% Branch', '% Funcs', '% Lines']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerow({
-                'File Name': file_name,
-                'Number of Tries': num_tries,
-                'Pass Status': "Pass" if pass_status else "Fail",
-                '% Stmts': coverage[file_name]['Stmts'],
-                '% Branch': coverage[file_name]['Branch'],
-                '% Funcs': coverage[file_name]['Funcs'],
-                '% Lines': coverage[file_name]['Lines']
-            })
-        print(f"Stats for '{file_name}' written to '{csv_filename}'.")
+def generate_csv_file(file_name):
+    csv_filename = f"{file_name}_stats.csv"
+    with open(csv_filename, 'w', newline='') as csvfile:
+        fieldnames = ['File Name', 'Number of Tries', 'Pass Status', '% Stmts', '% Branch', '% Funcs', '% Lines', 'Temperature']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
 
-# Example usage:
-# generate_csv_files(test_generation_statistics, coverage)
+def append_to_csv_files(file_name, test_generation_statistics, coverage, temperature_file_name):
+    print(f"Test File name: {temperature_file_name}.test.js")
+    csv_filename = f"{file_name}_stats.csv"
+    with open(csv_filename, 'a', newline='') as csvfile:
+        fieldnames = ['File Name', 'Number of Tries', 'Pass Status', '% Stmts', '% Branch', '% Funcs', '% Lines', 'Temperature']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writerow({
+            'File Name': f"{temperature_file_name}.test.js",
+            'Number of Tries': test_generation_statistics[0],
+            'Pass Status': "Pass" if test_generation_statistics[1] else "Fail",
+            '% Stmts': coverage[f"{temperature_file_name}.test.js"]['Stmts'],
+            '% Branch': coverage[f"{temperature_file_name}.test.js"]['Branch'],
+            '% Funcs': coverage[f"{temperature_file_name}.test.js"]['Funcs'],
+            '% Lines': coverage[f"{temperature_file_name}.test.js"]['Lines'],
+            'Temperature': test_generation_statistics[2]
+        })
+        print(f"Stats for '{temperature_file_name}.test.js' written to '{csv_filename}'.")
