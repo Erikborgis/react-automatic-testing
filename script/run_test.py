@@ -1,7 +1,6 @@
 import subprocess
 
 jest_path = "node_modules/jest/bin/jest.js"
-eslint_path = "node_modules/eslint/bin/eslint.js"
 
 # Run tests in tests folder.
 def run_test(file_name):
@@ -19,16 +18,6 @@ def run_test(file_name):
     return True, result.stderr
   else:
     return False, result.stderr
-
-# Run eslint on tests.
-def run_eslint():
-  result = subprocess.run(
-      ["node", eslint_path, "tests/**"],
-      capture_output=True,
-      text=True,
-      encoding="utf-8")
-  
-  print(result.stdout)
 
 # Checks code coverage on the react components.
 def check_coverage(files):
@@ -52,17 +41,5 @@ result = subprocess.run(
   text=True,
   encoding="utf-8")
 
-print(result.stderr)
-'''
-
-'''
-result = subprocess.run(
-    ["node", eslint_path, "tests/**"],
-    capture_output=True,
-    text=True,
-    encoding="utf-8")
-  
-print(result.stdout)
-print()
 print(result.stderr)
 '''
