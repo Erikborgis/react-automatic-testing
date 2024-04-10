@@ -6,6 +6,8 @@ Thesis work to make an automatic test generation suit for React Native TypeScrip
 
 To install all dependencies just run the command **pip install -r requirements.txt** then **npm install**
 
+Add a .env file and type **OPENAI_API_KEY="Your Security Key"**
+
 - Node 18.20.1
 - Pip
 - Python 3.12.3

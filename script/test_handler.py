@@ -15,5 +15,13 @@ def run_test(file_name):
     # Split the output into lines
     split_lines = result.stderr.splitlines()
 
+    filtered_lines = [line for line in split_lines if "DeprecationWarning" not in line and "--trace-deprecation" not in line]
+
+    filtered_output = "\n".join(filtered_lines)
+
+    test_status = "PASS" in filtered_lines[0] if filtered_lines else False
+
+    print(f"Test: {file_name} Passed: {test_status}")
+
     # Check if the test passed based on the output
-    return "PASS" in split_lines[0] if split_lines else False
+    return test_status, filtered_output
