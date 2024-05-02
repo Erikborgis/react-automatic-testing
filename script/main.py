@@ -13,8 +13,8 @@ def main():
     # Searches all folders in root folder for react components. Tuple with both filename and realtive path of the react components.
     react_files_and_paths = find_react_components.search_files(cwd, ".tsx")
 
-    stop_temperature = 0.5  # Maximum temperature, max temp = 2 For coding openAi recommends <= 0.5
-    steps_temperature = 2  # How many steps it should take between stop and start. This is how many test files will be generated per react component. This should be a whole number.
+    stop_temperature = 2  # Maximum temperature, max temp = 2 For coding openAi recommends <= 0.5
+    steps_temperature = 4  # How many steps it should take between stop and start. This is how many test files will be generated per react component. This should be a whole number.
     max_number_of_tries = 4 # Specify how many retries the test generation should make if test fails.
 
     for file_name, path in react_files_and_paths:

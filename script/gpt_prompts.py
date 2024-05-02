@@ -31,7 +31,7 @@ def retry_prompt(react_component_text, path_to_react_component, failed_test_prom
   messages = []
   prompt, assistant_prompt = create_default_prompts(react_component_text, path_to_react_component)
   
-  messages.append({"role": "system", "content": "You are a helpful software tester for React Native components using the testframework Jest"})
+  messages.append({"role": "system", "content": "You are a helpful software tester for React Native components using the test framework Jest"})
   messages.append({"role": "assistant", "content": assistant_prompt})
 
   for prompt_text in failed_test_prompt_list:
