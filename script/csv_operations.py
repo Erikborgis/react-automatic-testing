@@ -20,10 +20,10 @@ def append_to_csv_files(file_name, number_of_tries, pass_status, temperature, co
             'File Name': f"{test_file_name}",
             'Number of Tries': number_of_tries,
             'Pass Status': "Pass" if pass_status else "Fail",
-            'Stmts': coverage[test_file_name]['Stmts'],
-            'Branch': coverage[test_file_name]['Branch'],
-            'Funcs': coverage[test_file_name]['Funcs'],
-            'Lines': coverage[test_file_name]['Lines'],
+            'Stmts': coverage[test_file_name].get('Stmts', "NA"),
+            'Branch': coverage[test_file_name].get('Branch', "NA"),
+            'Funcs': coverage[test_file_name].get('Funcs', "NA"),
+            'Lines': coverage[test_file_name].get('Lines', "NA"),
             'Temperature': temperature
         })
 

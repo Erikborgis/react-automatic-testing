@@ -3,12 +3,17 @@ import json
 
 def create_default_prompts(react_component_text, path_to_react_component):
   prompt = f"I need unit tests for the React Native Component\n\
-  Do not write comments on the end of the file\n\
+  Always only return the code and never surround it with anything.\n\
+  Dont test elements that is not in the component.\n\
+  The tests should be descriptively commented inside the test file.\n\
+  Dont surround the testcode with ```jsx & ```.\n\
+  Do not use any testID to find elements unless they are in the component.\n\
   Import the React Native Component from {path_to_react_component}\n\
   The React Native Component to be tested:\n\
   {react_component_text}"
 
   assistantPrompt = "Always render ui elements if available, and always test the functionality\n\
+  Alway only send back the testcode and no other content\n\
   Follow this template for the test file:\n\
   import React from 'react';\n\
   import { render, fireEvent } from '@testing-library/react-native';\n\
@@ -37,7 +42,7 @@ def retry_prompt(react_component_text, path_to_react_component, failed_test_prom
   for prompt_text in failed_test_prompt_list:
     messages.append({"role": "assistant", "content": prompt_text})
 
-  messages.append({"role": "user", "content": f"Fix the test file, make sure you rewrite the whole file but only fix the error. This is the original prompt:\n{prompt}"})
+  messages.append({"role": "user", "content": f"Fix the test file by controlling the React Component again and the failed tests, using the error logs., make sure you rewrite the whole file but only fix the error. This is the original prompt:\n{prompt}"})
 
   test = ""
   for string in messages:
