@@ -24,10 +24,10 @@ def parse_coverage_report(coverage_result, filename):
       if "All files" in line:
         parts = line.strip().split('|')
         if len(parts) >= 5:   # Ensure that the line contains the expected number of parts
-          stmts_coverage = int(parts[1].strip())
-          branch_coverage = int(parts[2].strip())
-          funcs_coverage = int(parts[3].strip())
-          lines_coverage = int(parts[4].strip())
+          stmts_coverage = float(parts[1].strip())
+          branch_coverage = float(parts[2].strip())
+          funcs_coverage = float(parts[3].strip())
+          lines_coverage = float(parts[4].strip())
 
           coverage_data[filename] = {
               'Stmts': stmts_coverage,
