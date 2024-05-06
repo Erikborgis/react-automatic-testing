@@ -9,24 +9,27 @@ import gpt_prompts
 import os
 import threading
 
-semaphore = threading.Semaphore(15)
+semaphore = threading.Semaphore(10)
 
 def process_react_component(file_name, path):
 
+    parent_directory = ".."
+    relative_path = os.path.join(parent_directory, path).replace("\\", "/") # Mabey no need on mac?
+
     try:
-        max_number_of_tries = 2 # Specify how many retries the test generation should make if test fails. Must be more than one.
-        temperature = [0.4]
-        reruns = 2 # Specifies how many times a certain file should be rerun
+        max_number_of_tries = 3 # Specify how many retries the test generation should make if test fails. Must be more than one.
+        temperature = [0.2]
+        reruns = 5 # Specifies how many times a certain file should be rerun
 
         react_component_text = file_operations.read_file(path)
-            
+
         if react_component_text:
             csv_operations.generate_csv_file(file_name)
             for rerun in range(reruns):
                 for temp in temperature:                   
                     test_file_name = f"{file_name}_{rerun}_{temp}.test.js"
                     
-                    gpt_message = gpt_prompts.first_prompt(react_component_text, path)
+                    gpt_message = gpt_prompts.first_prompt(react_component_text, relative_path)
                     test_content = write_to_gpt.call_openai_api(gpt_message, temp)
 
                     # Generate test file and check if the test runs correctly
@@ -46,7 +49,7 @@ def process_react_component(file_name, path):
                             
                             assistant_prompts = gpt_prompts.create_assistant_prompts(test_files, test_errors)
 
-                            gpt_message = gpt_prompts.retry_prompt(react_component_text, path, assistant_prompts)
+                            gpt_message = gpt_prompts.retry_prompt(react_component_text, relative_path, assistant_prompts)
 
                             test_content = write_to_gpt.regenerate_test(gpt_message, temp)
 

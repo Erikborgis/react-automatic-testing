@@ -15,11 +15,12 @@ def create_test_file(content, file_name):
 
 # Reads file at certain path and returns string.
 def read_file(file_path):
+    print(file_path)
     try:
         with open(file_path, 'r') as file:
             text = file.read()
         return text
     except FileNotFoundError:
-        print("File not found.")
+        print("File not found in read_file method")
     except Exception as e:
         print("An error occurred:", e)

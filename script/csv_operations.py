@@ -5,6 +5,7 @@ statistics_folder = "statistics/"
 # Generates a csv file, provides statistics of the unit test generation.
 def generate_csv_file(file_name):
     csv_filename = f"{statistics_folder}{file_name}_stats.csv"
+    print(csv_filename)
     with open(csv_filename, 'w', newline='') as csvfile:
         fieldnames = ['File Name', 'Number of Tries', 'Pass Status', 'Stmts', 'Branch', 'Funcs', 'Lines', 'Temperature']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)

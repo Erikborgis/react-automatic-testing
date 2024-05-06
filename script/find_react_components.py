@@ -3,9 +3,11 @@ import os
 # Returns tuple
 def search_files(directory, extension):
     found_files = []
-    for root, dirs, files in os.walk(directory):
+    for root, dirs, files in os.walk("../../eir"): # <----Hardcoded
         if 'node_modules' in dirs:
             dirs.remove('node_modules')
+        if 'mobile' in dirs:
+            dirs.remove('mobile')
         for file in files:
             if file.endswith(extension):
                 # Get the relative path of the file

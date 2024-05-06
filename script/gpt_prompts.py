@@ -1,6 +1,5 @@
 import json
 
-
 def create_default_prompts(react_component_text, path_to_react_component):
   prompt = f"I need unit tests for the React Native Component.\n\
   Only return the code and never surround it with anything.\n\
@@ -29,7 +28,7 @@ def retry_prompt(react_component_text, path_to_react_component, failed_test_prom
   messages = []
   prompt, assistant_prompt = create_default_prompts(react_component_text, path_to_react_component)
   
-  messages.append({"role": "system", "content": "You are a helpful software tester for React Native components using the test framework Jest"})
+  messages.append({"role": "system", "content": "You are a helpful software tester for React Native components using the test framework Vitest"})
   messages.append({"role": "assistant", "content": assistant_prompt})
 
   for prompt_text in failed_test_prompt_list:
@@ -49,7 +48,7 @@ def first_prompt(react_component_text, path_to_react_component):
   prompt, assistant_prompt = create_default_prompts(react_component_text, path_to_react_component)
   messages = []
 
-  messages.append({"role": "system", "content": "You are a helpful software tester for React Native components using the testframework Jest"})
+  messages.append({"role": "system", "content": "You are a helpful software tester for React Native components using the testframework Vitest"})
   messages.append({"role": "assistant", "content": assistant_prompt})
   messages.append({"role": "user", "content": prompt})
   
