@@ -15,8 +15,8 @@ def process_react_component(file_name, path):
 
     try:
         max_number_of_tries = 2 # Specify how many retries the test generation should make if test fails. Must be more than one.
-        temperature = [0.2]
-        reruns = 1 # Specifies how many times a certain file should be rerun
+        temperature = [0.4]
+        reruns = 2 # Specifies how many times a certain file should be rerun
 
         react_component_text = file_operations.read_file(path)
             
@@ -32,6 +32,8 @@ def process_react_component(file_name, path):
                     # Generate test file and check if the test runs correctly
                     file_operations.create_test_file(test_content, test_file_name)
                     test_status, test_log = test_handler.run_test(test_file_name)
+
+                    print(test_log)
 
                     # Regenerates unit tests until the tests pass. Max 5 tries.
                     if test_status:
