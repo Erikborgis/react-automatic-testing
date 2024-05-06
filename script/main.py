@@ -13,7 +13,7 @@ def main():
     # Searches all folders in root folder for react components. Tuple with both filename and realtive path of the react components.
     react_files_and_paths = find_react_components.search_files(cwd, ".tsx")
 
-    max_number_of_tries = 5 # Specify how many retries the test generation should make if test fails.
+    max_number_of_tries = 2 # Specify how many retries the test generation should make if test fails Must be more than one.
     temperature = [0.2, 0.4, 0.6, 0.8, 1]
     reruns = 10 # Specifies how many times a certain file should be rerun
 
@@ -50,7 +50,6 @@ def main():
                             # Generate test file and check if the test runs correctly
                             file_operations.create_test_file(test_content, test_file_name)
                             test_status, test_log = test_handler.run_test(test_file_name)
-
                             if test_status:
                                 break
                             else:
@@ -60,7 +59,6 @@ def main():
 
                     # Check the code coverage on the react component the test is responsible for.
                     coverage = code_coverage.check_coverage_specific_test(test_file_name)
-
                     # Add parameters to create statistics file.
                     csv_operations.append_to_csv_files(file_name, number_of_tries, test_status, temp, coverage, test_file_name) 
 
